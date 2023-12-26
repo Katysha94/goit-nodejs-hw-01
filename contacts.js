@@ -11,14 +11,14 @@ async function listContacts() {
 async function getContactById(contactId) {
   const contacts = await listContacts();
   const searchedContact = contacts.find((contact) => contact.id === contactId);
-  return searchedContact;
+  return searchedContact || null;
 }
 
 async function removeContact(contactId) {
   const contacts = await listContacts();
   const index = contacts.findIndex((contact) => contact.id === contactId);
   if (index === -1) {
-    return undefined;
+    return null;
   }
   const deletedContact = contacts.splice(index, 1)[0];
   await fs.writeFile(contactsPath, JSON.stringify(contacts, undefined, 2));
